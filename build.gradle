@@ -1,0 +1,123 @@
+plugins {
+  id 'org.springframework.boot' version '2.3.3.RELEASE'
+  id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+  id 'java'
+  id 'com.diffplug.gradle.spotless' version '4.2.1'
+}
+
+group = 'com.lguplus.ukids.admin'
+version = '0.0.1-SNAPSHOT'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation 'org.springframework.boot:spring-boot-starter-web'
+  implementation 'org.springframework.boot:spring-boot-starter-validation'
+  implementation 'org.apache.httpcomponents:httpclient:4.5.9'
+
+  //jsp
+  implementation 'javax.servlet:jstl'
+  implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+
+
+  //redis
+  implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+  //postgre
+  implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.16'
+
+  //mybatis
+  compile('org.springframework.boot:spring-boot-starter-jdbc')
+  compile('org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1')
+
+  //aws
+  implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.415')
+  implementation 'com.amazonaws:aws-java-sdk-sts'
+  implementation 'com.amazonaws:aws-java-sdk-s3'
+  compile "com.amazonaws:aws-java-sdk:1.10.55"
+
+  //gson
+  compile('com.google.code.gson:gson:2.8.5')
+
+  //lombok
+  compileOnly 'org.projectlombok:lombok:1.18.10'
+  annotationProcessor 'org.projectlombok:lombok:1.18.10'
+
+  //swagger
+  implementation('org.springdoc:springdoc-openapi-ui:1.4.6')
+
+  //logging
+  compile group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4.1', version: '1.16'
+
+  //acuator
+  compile('org.springframework.boot:spring-boot-starter-actuator')
+
+  //aop
+  compile('org.springframework.boot:spring-boot-starter-aop')
+
+  //hot deploy
+  compile('org.springframework.boot:spring-boot-devtools')
+
+  //external libs
+  implementation fileTree(dir: 'libs', include: '*.jar')
+
+  //test
+  testImplementation('org.springframework.boot:spring-boot-starter-test') {
+    exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+  }
+  testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+ext {
+  set('springCloudVersion', "Hoxton.SR1")
+}
+
+dependencyManagement {
+  imports {
+    mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    mavenBom "com.google.cloud:libraries-bom:8.0.0"
+    mavenBom 'com.amazonaws:aws-java-sdk-bom:1.11.868'
+  }
+}
+
+build {
+  dependsOn 'spotlessApply'
+}
+
+spotless {
+    java {
+        importOrder 'java', 'javax', 'org', 'com', ''
+        removeUnusedImports()
+        googleJavaFormat('1.7').aosp()
+        indentWithSpaces(4)
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+    format 'misc', {
+        target '**/*.yml', '**/*.gradle', '**/*.md', '**/.gitignore'
+        indentWithSpaces(2)
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+}
+
+def getCurrentGitBranch() {
+    def gitBranch = "Unknown branch"
+    try {
+        def workingDir = new File("${project.projectDir}")
+        def result = 'git rev-parse --abbrev-ref HEAD'.execute(null, workingDir)
+        result.waitFor()
+        if (result.exitValue() == 0) {
+            gitBranch = result.text.trim()
+        }
+
+        if (gitBranch == "HEAD"){
+          gitBranch = branch
+        }
+    } catch (e) {
+    }
+
+    return gitBranch.replaceAll('/','-')
+}

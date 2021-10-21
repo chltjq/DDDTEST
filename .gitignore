@@ -1,0 +1,51 @@
+# Logs and databases #
+######################
+*.log
+*.sqlite
+*.class
+# *.jar
+**/*.lock
+*.mvb.bak
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Compiled Output #
+###################
+coverage
+.nyc_output
+compiled_tests
+
+# IDE generated files #
+#######################
+.idea/*
+
+# Java Output #
+#######################
+**/.classpath
+**/.project
+**/.settings
+/bin/
+
+# Terraform files #
+################
+**/backend.tf
+**/.terraform/*
+/.vscode/
+/.gradle/
+/bin/
+/build/
+
+# Gradle files #
+################
+# gradle/wrapper/gradle-wrapper.properties
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+# !gradle-wrapper.jar

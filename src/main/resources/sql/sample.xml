@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.lguplus.ukids.admin.repository.SampleRepository">
+<select id="selectSampleAll" resultType="com.lguplus.ukids.admin.dto.SampleDto">
+  <![CDATA[
+    SELECT id
+          ,name
+      FROM sample
+  ]]>
+  </select>
+
+  <select id="selectSamples" resultType="com.lguplus.ukids.admin.dto.SampleDto" parameterType="com.lguplus.ukids.admin.dto.SampleDto">
+  <![CDATA[
+    SELECT id
+          ,name
+      FROM sample
+     WHERE 1=1
+  ]]>
+      <if test="name != null and name != ''">
+      <![CDATA[
+        AND name LIKE CONCAT('%', #{name}, '%')
+      ]]>
+      </if>
+  </select>
+
+  <select id="selectSampleDetail" resultType="com.lguplus.ukids.admin.dto.SampleDto" parameterType="String">
+  <![CDATA[
+    SELECT id
+          ,name
+      FROM sample
+     WHERE id = #{id}
+  ]]>
+  </select>
+
+  <insert id="insertSample" parameterType="com.lguplus.ukids.admin.dto.SampleDto">
+  <![CDATA[
+    INSERT INTO sample
+          (id
+          ,name)
+    VALUES (#{id}
+           ,#{name})
+  ]]>
+  </insert>
+
+  <update id="updateSample" parameterType="com.lguplus.ukids.admin.dto.SampleDto">
+  <![CDATA[
+    UPDATE sample
+       SET name = #{name}
+     WHERE id = #{id}
+  ]]>
+  </update>
+
+  <delete id="deleteSample" parameterType="com.lguplus.ukids.admin.dto.SampleDto">
+  <![CDATA[
+    DELETE FROM sample
+     WHERE id = #{id}
+  ]]>
+  </delete>
+</mapper>
