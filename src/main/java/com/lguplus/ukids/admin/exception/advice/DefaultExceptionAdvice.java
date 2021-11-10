@@ -31,7 +31,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @ControllerAdvice
 public class DefaultExceptionAdvice {
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
-
+    //aaaaaaaaaaaaa
     @ExceptionHandler(BusinessException.class)
     protected ResponseEntity<Object> handleException(final BusinessException businessException) {
         Map<String, Object> result = new HashMap<>();
