@@ -21,4 +21,5 @@ public class CorsConfig implements WebMvcConfigurer {
         //CCCCCCCOOOOOONNNNNNFFFFFILLLLLLLCTTTTTT
         //11111////
     }
+    
 }
