@@ -16,7 +16,7 @@ import java.nio.charset.StandardCharsets;
 
 @Configuration
 public class DataSourceConfig {
-
+	/**/
     @Value("${resources.root}${resources.path.admin-endpoint}")
     private Resource endpoint;
 
