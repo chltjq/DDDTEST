@@ -17,4 +17,5 @@ public class CorsConfig implements WebMvcConfigurer {
                         "Access-Control-Allow-Credentials", "locale", "Content-Disposition")
                 .allowCredentials(true).maxAge(3000L);
     }
+    //CCCCCCCOOOOOONNNNNNFFFFFILLLLLLLCTTTTTT
 }
