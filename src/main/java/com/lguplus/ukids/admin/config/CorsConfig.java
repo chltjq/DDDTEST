@@ -16,6 +16,7 @@ public class CorsConfig implements WebMvcConfigurer {
                 .exposedHeaders("Access-Control-Allow-Headers", "Access-Control-Allow-Origin",
                         "Access-Control-Allow-Credentials", "locale", "Content-Disposition")
                 .allowCredentials(true).maxAge(3000L);
+      //CCCCCCCOOOOOONNNNNNFFFFFILLLLLLLCTTTTTT
     }
-    //CCCCCCCOOOOOONNNNNNFFFFFILLLLLLLCTTTTTT
+    
 }
